@@ -1,0 +1,30 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="skaftanis.smyc.dilotinotebook.GameEnv" >
+
+    <item
+        android:id="@+id/bg"
+        android:orderInCategory="100"
+        android:title="@string/action_bg"
+        app:showAsAction="never"/>
+
+    
+         <item
+        android:id="@+id/end"
+        android:orderInCategory="200"
+        android:title="@string/action_end"
+        app:showAsAction="never"/>
+         
+          <item
+        android:id="@+id/undo"
+        android:orderInCategory="200"
+        android:title="@string/action_undo"
+        app:showAsAction="never"/>
+          
+            <item
+        android:id="@+id/about"
+        android:orderInCategory="200"
+        android:title="@string/action_about"
+        app:showAsAction="never"/>
+</menu>

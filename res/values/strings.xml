@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Diloti Notebook</string>
+    <string name="action_bg">Αλλαγή φόντο</string>
+    <string name="action_end">Ορισμός πόντων λήξης</string>
+    <string name="action_undo">Αναίρεση τελευταίας κίνησης</string>
+    <string name="action_about">Σχετικά</string>
+    <string name="title_activity_game_env">Diloti Notebook #beta</string>
+    <string name="text_Points">Πόντοι </string>
+    <string name="text_Xeres">Ξερές </string>
+    <string name="text_Filla">Φύλλα </string>
+    <string name="next">Επόμενος γύρος </string>
+    <string name="Round">Γύρος 1</string>
+    <string name="Team1">Ομάδα 1</string>
+    <string name="Team2">Ομάδα 2</string>
+    
+
+</resources>
