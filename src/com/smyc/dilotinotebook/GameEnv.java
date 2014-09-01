@@ -384,7 +384,16 @@ public class GameEnv extends ActionBarActivity {
 		.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String input = txtUrl.getText().toString();
-				WriteToFile("endnum.txt", input );		
+				WriteToFile("endnum.txt", input );	
+				try {
+					end=Integer.parseInt(getFirstLine("endnum.txt"));
+				} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		})
 		
