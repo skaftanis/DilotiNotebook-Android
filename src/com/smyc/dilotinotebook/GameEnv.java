@@ -1,28 +1,14 @@
 package com.smyc.dilotinotebook;
 
-// BUG #1: αλλαγή πόντων λήξης χωρίς restart
-
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-
-
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
@@ -34,25 +20,17 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-public class GameEnv extends ActionBarActivity {
 
-	//DbAdapter db = new DbAdapter(this);
+public class GameEnv extends ActionBarActivity {
 	
-	//ads section
-	//private AdView adView;
-	//private final String unitid ="ca-app-pub-9464597938461177/8881937835";
-	
-	
+
 	public String team1Name; //public vars with default value
 	public String team2Name;
 	
@@ -63,11 +41,6 @@ public class GameEnv extends ActionBarActivity {
 	private int prtotal2;
 	
 	private boolean undoClicked=true;
-	
-//	private boolean oneChecked=false;
-//	private boolean twoChecked=false;;
-	
-	//private static String namebg;
 	private static int end;
 
 
@@ -76,43 +49,14 @@ public class GameEnv extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game_env);
 		Intent intent = getIntent();
+		  
+		//ads staff 
+		 AdView adView = (AdView) findViewById(R.id.adView);
+		 AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).addTestDevice("EAD625570A28B498CEA7ECF661A068D4").build();
+		 adView.loadAd(adRequest);
+		
+		end=61; //default value for end
 	
-		try {
-			end=Integer.parseInt(getFirstLine("endnum.txt"));
-		} catch (NumberFormatException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-
-//save background choice (NOT WORKING)
-		
-	//	try {
-	//		namebg=getFirstLine("bgdefault.txt");
-	//	} catch (IOException e) {
-	//		e.printStackTrace();
-	//	}
-		
-	//	ScrollView scroll = (ScrollView) findViewById (R.id.Scroll);
-	//	if (namebg == "gwf") {
-	//		if (Build.VERSION.SDK_INT >= 16) {
-	//			Resources res = getResources();
-	//			Drawable drawable = res.getDrawable(R.drawable.greenbg); 
-	//		    scroll.setBackground(drawable);
-	//		}
-	//		else {
-	//			Resources res = getResources();
-	//			Drawable drawable = res.getDrawable(R.drawable.greenbg); 
-	//		    scroll.setBackgroundDrawable(drawable);	
-	//		}	
-	//	}
-	//	else if (namebg == "gwc") {
-			//scroll.setBackgroundResource(R.drawable.bg);
-	//	}
-		
 		setNewGame();
 		if ( MainActivity.mega == 1)
 			InsertTeams();
@@ -121,7 +65,6 @@ public class GameEnv extends ActionBarActivity {
 		final TextView score2 = (TextView) findViewById (R.id.team2Score);
 
 		score1.setText(Integer.toString(MainActivity.total1));
-		//score1.setText(namebg);
 		score2.setText(Integer.toString(MainActivity.total2));
 		
 		
@@ -133,13 +76,11 @@ public class GameEnv extends ActionBarActivity {
 		
 		EditText arx2 = (EditText)findViewById(R.id.xeres2);
 		arx2.setText("0");
-
-		
-		
+	
 		AutoComplete();
 		
 		 Button button= (Button) findViewById(R.id.button1);
-		 //check if something is empty
+		     //check if something is empty
 			 if ( !TextUtils.isEmpty(score1.getText()) )
 				 button.setEnabled(false);
 			 else 
@@ -222,14 +163,7 @@ public class GameEnv extends ActionBarActivity {
 			}
 		  });
 		
-		  //ads staff
-	//	  LinearLayout rootLayout = (LinearLayout) findViewById(R.id.rootView);
-	//	  adView = new AdView(this);
-	//	  adView.setAdSize(AdSize.SMART_BANNER);
-	//	  adView.setAdUnitId(unitid);
-	//	  rootLayout.addView(adView,0);
-	//	  AdRequest adRequest = new AdRequest.Builder().build();
-	//	  adView.loadAd(adRequest);
+
 	}
 
 	@Override
@@ -238,7 +172,6 @@ public class GameEnv extends ActionBarActivity {
 		getMenuInflater().inflate(R.menu.game_env, menu);
 		return true;
 	}
-
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -304,7 +237,7 @@ public class GameEnv extends ActionBarActivity {
 				ScrollView scroll = (ScrollView) findViewById (R.id.Scroll);
 				scroll.fullScroll(ScrollView.FOCUS_UP);
 				TextView round = (TextView) findViewById (R.id.round);
-				round.setText("Ãýñïò " + MainActivity.mega);
+				round.setText("Γύρος " + MainActivity.mega);
 				if ( MainActivity.total1 >= end || MainActivity.total2 >= end ) {
 					EndGameBox();	
 				}
@@ -314,9 +247,9 @@ public class GameEnv extends ActionBarActivity {
 		}
 		if (id == R.id.about) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("Ó÷åôéêÜ ìå ôï Diloti NoteBook");
-			builder.setMessage("Ôï Diloti Notebook åßíáé Ýíá app ôï ïðïßï óáò âïçèÜåé óôçí åýêïëç êáé ãñÞãïñç êáôáìÝôñçóç ôùí ðüíôùí óôï ãíùóôü åëëçíéêü ðáé÷íßäé äçëùôÞ. "
-					+ "Äçìéïõñãüò: Óðýñïò ÊáöôÜíçò ãéá ShowMeYourCode");
+			builder.setTitle("Σχετικά με το Diloti NoteBook");
+			builder.setMessage("Το Diloti Notebook είναι ένα app το οποίο σας βοηθάει στην εύκολη και γρήγορη καταμέτρηση των πόντων στο γνωστό ελληνικό παιχνίδι δηλωτή. "
+					+ "Δημιουργός: Σπύρος Καφτάνης για ShowMeYourCode \n Version 1.0 (Builded 4/9/2014)");
 			builder.setPositiveButton("OK", null);
 			AlertDialog dialog = builder.show();
 
@@ -368,10 +301,13 @@ public class GameEnv extends ActionBarActivity {
 				team2.setText(input);
 				if (input.matches(""))
 					team2.setText("Ομάδα 2");
+				insertBox();
+
 			}
 		})
 		
 		.show(); 
+		//insertBox is for choosing the points to end
 	}
 	
 	private void insertBox () {
@@ -384,29 +320,23 @@ public class GameEnv extends ActionBarActivity {
 		.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String input = txtUrl.getText().toString();
-				WriteToFile("endnum.txt", input );	
-				try {
-					end=Integer.parseInt(getFirstLine("endnum.txt"));
-				} catch (NumberFormatException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				if (input.matches(""))
+					end=end; //no effect
+				else {
+					TextView score1 = (TextView) findViewById (R.id.team1Score);
+				    TextView score2 = (TextView) findViewById (R.id.team2Score);
+				    String points1 = (String) score1.getText();
+				    String points2 = (String) score2.getText();
+					if ( Integer.parseInt(input)< Integer.parseInt(points1) || Integer.parseInt(input) < Integer.parseInt(points2)) {
+						Toast.makeText(getApplicationContext(), "Μη κλέβεις!", Toast.LENGTH_LONG).show();
+						insertBox();
+					} else
+						end=Integer.parseInt(input);
 				}
 			}
 		})
 		
 		.show(); 
-		try {
-			end=Integer.parseInt(getFirstLine("endnum.txt"));
-		} catch (NumberFormatException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 	
 	}
 	private void AutoComplete(){
@@ -434,10 +364,9 @@ public class GameEnv extends ActionBarActivity {
                    }
                    points1 = text.getText().toString(); //refresh values
                    points2 = text2.getText().toString();
-                 //  if (points2.matches("")) {
-                	   text2.setText(Integer.toString(7-Integer.parseInt(points1)));
-                  // }               	                   
-                button.setEnabled(true);  
+                   text2.setText(Integer.toString(7-Integer.parseInt(points1)));
+              	                   
+                   button.setEnabled(true);  
    
                                        	
                }
@@ -462,16 +391,6 @@ public class GameEnv extends ActionBarActivity {
 		    	  return false;		    	  	 
 	  }
 	  
-	 
-	
-	private void CheckBox () {
-		CheckBox check1= (CheckBox) findViewById(R.id.filla1check);
-    	CheckBox check2= (CheckBox) findViewById(R.id.filla2check);
-    	  if (check1.isChecked()) {
-       	   TextView test = (TextView) findViewById(R.id.round);
-       	   test.setText("XAXAA");
-          }
-	}
 	
 	  public void newGameFunc (View view) {
 	    	Intent intent = new Intent (this, GameEnv.class);
@@ -492,8 +411,8 @@ public class GameEnv extends ActionBarActivity {
 			else 
 				builder.setMessage("There is no winner! Tie");
 			builder.setCancelable(false);
-			builder.setPositiveButton("New Game", new NewGameOnClickListener());
-			builder.setNegativeButton("Exit", new ExitOnClickListener());
+			builder.setPositiveButton("Νέο Παιχνίδι", new NewGameOnClickListener());
+			builder.setNegativeButton("Έξοδος", new ExitOnClickListener());
 			AlertDialog dialog = builder.create();
 			dialog.show();
 	  }
@@ -514,7 +433,7 @@ public class GameEnv extends ActionBarActivity {
 	  private void setNewGame () {
 		  	MainActivity.mega=1;
 		  	TextView round = (TextView) findViewById (R.id.round);
-		  	round.setText("Round "+ MainActivity.mega) ;
+		  	round.setText("Γύρος "+ MainActivity.mega) ;
 			TextView score1 = (TextView) findViewById (R.id.team1Score);
 			TextView score2 = (TextView) findViewById (R.id.team2Score);
 			score1.setText("0");
@@ -548,39 +467,13 @@ public class GameEnv extends ActionBarActivity {
 		        first+="\r\n";
 		        writer.append(first);
 		        writer.flush();
-		        writer.close();
-		        
-		        //Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+		        writer.close();		        		       
 		    }
 		    catch(IOException e)
 		    {
-		         e.printStackTrace();
-		         //importError = e.getMessage();
-		        // iError();
+		         e.printStackTrace();		      
 		    }
 		   }  
 		
-	private  String getFirstLine (String name) throws IOException {
-			File sdCard = Environment.getExternalStorageDirectory();
-			String Link = null;
-			name=sdCard.getAbsolutePath()+"/"+"DilotiNotebook"+"/"+name;
-			
-			BufferedReader br;
-			try {
-				br = new BufferedReader(new FileReader(name));
-				String line;
-				while ((line = br.readLine()) != null) {
-				   Link=line;
-				   break;
-				}
-				br.close();
-					
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			
-			return Link;
-	}
-	
 
 }
