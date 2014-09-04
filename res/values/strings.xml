@@ -6,7 +6,7 @@
     <string name="action_end">Ορισμός πόντων λήξης</string>
     <string name="action_undo">Αναίρεση τελευταίας κίνησης</string>
     <string name="action_about">Σχετικά</string>
-    <string name="title_activity_game_env">Diloti Notebook #beta</string>
+    <string name="title_activity_game_env">Diloti Notebook</string>
     <string name="text_Points">Πόντοι </string>
     <string name="text_Xeres">Ξερές </string>
     <string name="text_Filla">Φύλλα </string>
